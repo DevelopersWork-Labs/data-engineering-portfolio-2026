@@ -1,91 +1,152 @@
-# ⭐ **DAY 1 QUICK TASK CARD — 7 DEC 2025 (Weekend Mode)**
-
-**Total Time: ~5 hours**
-**Goal: Strong foundation + repo setup + PySpark warm-up + DSA + GenAI basics**
+Got it — here is a **clean, fresh, non-concluded Day 1 Task Card**, written as if **nothing has been started yet**.
+No references to previous screenshots, no assumptions — fully reset, ready to begin **from scratch at 7 Dec 2025**.
 
 ---
 
-# ✅ **SECTION A — Repo + Environment Setup (60–75 mins)**
+# ⭐ **DAY 1 TASK CARD — 7 DEC 2025 (Weekend Mode, Fresh Start)**
 
-### ✔ Tasks
-
-* ☐ Create GitHub repo: **`data-engineering-portfolio`**
-* ☐ Add folders:
-
-  ```
-  week1/
-  project1_lakehouse/
-  project2_streaming/
-  project3_genai_rag/
-  notebooks/
-  dsa/
-  docs/
-  ```
-* ☐ Add README.md (short intro + goals)
-* ☐ Open Databricks Community Edition
-* ☐ Create cluster: **`de-learning-cluster`**
-* ☐ Create notebook `day1_intro_pyspark`
-* ☐ Run:
-
-  ```python
-  spark.range(5).show()
-  ```
+**Total Time: ~5 Hours**
+**Goal:** Begin the 12-week journey with a strong, structured foundation across repo setup, PySpark, DSA, and GenAI fundamentals.
 
 ---
 
-# 🔥 **SECTION B — DSA Deep Warm-up (75–90 mins)**
+# ✅ **SECTION A — Repo + Databricks Setup (60–75 mins)**
 
-### ✔ Tasks
+### **1. Create a new GitHub repository**
 
-Solve **6 problems**:
+**Name:** `data-engineering-portfolio`
 
-* ☐ 2 × Hashing (easy)
-* ☐ 2 × Arrays (easy)
-* ☐ 2 × Arrays (medium: two pointers/sliding window)
+Create these folders inside it:
 
-### ✔ Notes
+```
+week1/
+project1_lakehouse/
+project2_streaming/
+project3_genai_rag/
+notebooks/
+dsa/
+docs/
+```
 
-* ☐ Create `dsa/notes_day1.md`
-* ☐ Add short notes on:
+### **2. Add a README.md**
 
-  * Hashing
-  * Two pointers
-  * Sliding window
+Include:
+
+* Short introduction
+* Goals of the 12-week journey
+* Placeholder for projects
+
+### **3. Open Databricks Free Edition**
+
+Go to: [https://www.databricks.com/try-databricks](https://www.databricks.com/try-databricks)
+
+Then:
+
+* Click **Workspace → Add → Notebook**
+* Name: `day1_intro_pyspark`
+* Language: **Python**
+* Compute: **Serverless SQL Warehouse** (it supports PySpark)
+
+### **4. Test PySpark Execution**
+
+Run:
+
+```python
+spark.range(5).show()
+```
 
 ---
 
-# 🔧 **SECTION C — PySpark Hands-on (90 mins)**
+# 🔥 **SECTION B — DSA Warm-up (75–90 mins)**
 
-### ✔ Notebook #1 — PySpark Basics
+Solve **6 problems today** in total:
 
-* ☐ DataFrame creation
-* ☐ select / filter / withColumn
-* ☐ `.explain()` → screenshot it
+### **Hashing (2 easy)**
 
-### ✔ Notebook #2 — Joins
+Examples:
 
-* ☐ inner join
-* ☐ left join
-* ☐ broadcast join
-* ☐ `.explain(mode="formatted")` → compare
+* Check if array contains duplicate
+* Frequency mapping problem
 
-Upload both notebooks to `/notebooks/day1/`.
+### **Arrays (2 easy)**
+
+Examples:
+
+* Reverse array
+* Find max/min
+
+### **Arrays (2 medium)**
+
+Examples:
+
+* Two Sum
+* Move Zeroes
+* Pair sum (two pointers)
+* Kadane (intro level)
+
+### **Create DSA Notes File**
+
+Path: `dsa/notes_day1.md`
+
+Write short notes on:
+
+* What hashing is used for
+* Two pointers pattern
+* Sliding window basics
+
+---
+
+# 🔧 **SECTION C — PySpark Hands-On (90 mins)**
+
+Create folder:
+`notebooks/day1/`
+
+### **Notebook #1 — PySpark Basics**
+
+Include:
+
+```python
+df = spark.createDataFrame([(1, "A"), (2, "B")], ["id", "val"])
+df.show()
+df.select("val").show()
+df.withColumn("id2", df.id * 10).show()
+df.explain()
+```
+
+### **Notebook #2 — Joins + Explain Plan**
+
+Include:
+
+```python
+df1 = spark.createDataFrame([(1, "x"), (2, "y")], ["id", "val1"])
+df2 = spark.createDataFrame([(1, "p"), (3, "q")], ["id", "val2"])
+
+df1.join(df2, "id", "inner").show()
+df1.join(df2, "id", "left").show()
+
+from pyspark.sql.functions import broadcast
+df1.join(broadcast(df2), "id").explain("formatted")
+```
+
+Add both notebooks to GitHub.
 
 ---
 
 # 🧠 **SECTION D — GenAI Light Foundations (45 mins)**
 
-### ✔ Add to Master Notes:
+Add a section in your notes (Master Notes):
 
-* ☐ What is an embedding?
-* ☐ What is cosine similarity?
-* ☐ What is chunking?
-* ☐ What is retrieval?
-* ☐ RAG 5-step flow
+Write definitions for:
 
-### (Optional but recommended)
+* Embeddings
+* Cosine similarity
+* Chunking
+* Retrieval
+* RAG (Retrieval-Augmented Generation) 5-step workflow
 
-* ☐ Run HuggingFace embedding test:
+### **Optional Small Experiment**
+
+If you want to try embeddings:
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -97,9 +158,7 @@ model.encode(["Day 1 embedding test"])
 
 # 🏗 **SECTION E — Project 1 Setup (30 mins)**
 
-### ✔ Tasks
-
-Inside `project1_lakehouse/` add:
+Inside `project1_lakehouse/`, create:
 
 ```
 bronze/
@@ -109,28 +168,71 @@ docs/
 notebooks/
 ```
 
-* ☐ Create **architecture.md**
-  Include:
+Create a file:
+`project1_lakehouse/docs/architecture.md`
 
-  * Medallion architecture explanation
-  * Bronze → Silver → Gold definitions
+Start with:
+
+* What is Medallion Architecture
+* Bronze layer purpose
+* Silver layer purpose
+* Gold layer purpose
 
 ---
 
-# 🎯 **REQUIRED PROOFS TO SUBMIT FOR DAY 1 COMPLETION**
+# 🎯 **DAY 1 – REQUIRED PROOFS BEFORE WE UNLOCK DAY 2**
 
-When done, send:
+At the end of today, send:
 
 ### ✔ GitHub repo link
 
-### ✔ Screenshot of Databricks CE workspace
+### ✔ Screenshot of PySpark notebook running `spark.range(5).show()`
 
-### ✔ Screenshot of `spark.range(5).show()`
+### ✔ Screenshots of Notebook #1 and Notebook #2
 
-### ✔ 6 DSA problems (screenshots)
+### ✔ Screenshots of 6 solved DSA problems
 
-### ✔ Notebooks #1 & #2 (upload + link or screenshot)
+### ✔ Screenshot of GenAI notes
 
-### ✔ GenAI notes screenshot
+### ✔ Screenshot of `architecture.md` (with at least a draft)
 
-### ✔ `architecture.md` screenshot
+---
+
+# 🔋 **Optional Stretch Tasks**
+
+If your energy is good:
+
+* Add a Medallion Architecture diagram using draw.io
+* Add `.gitignore` to repo
+* Solve one extra medium DSA problem
+
+---
+
+# 📝 **Daily Check-in Template (Use at end of Day 1)**
+
+```
+📅 Daily Check-in – Day 1 (7 Dec 2025)
+
+1️⃣ Completed Today:
+- 
+- 
+- 
+
+2️⃣ Proofs:
+- GitHub link:
+- DSA screenshots:
+- PySpark notebook screenshots:
+- Notes screenshots:
+
+3️⃣ Blockers:
+-
+
+4️⃣ Energy Level:
+Low / Medium / High
+```
+
+---
+
+If you need a **Day 1 PDF**, just say:
+
+**“Generate Day 1 Task Card PDF”**
