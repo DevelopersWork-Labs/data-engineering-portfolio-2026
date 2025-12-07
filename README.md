@@ -1,6 +1,6 @@
 # 12-Week Data Engineering + GenAI Transformation 2026
 
-This repository is part of my structured journey to transition into a Senior Data Engineer / AI Data Engineer role with a target compensation of 30–40 LPA.  
+This repository is part of my structured journey to transition into a Senior Data Engineer / AI Data Engineer role.  
 I am combining my existing experience in Databricks and PySpark with modern GenAI workflows, vector search, and LLM-based systems.
 
 ## Mission
