@@ -1,60 +1,69 @@
-# 📅 **DAY 1 TASK CARD: The 2-Hour Sprint + Stretch**
+# 🚀 **Day 1: Foundation & Optimization**
 
-**Date:** Monday, Dec 8
-**Focus:** Algorithmic Patterns & Spark Optimization Theory
-**Mandatory Time:** 2 Hours (Strict)
-**Optional Time:** +1 Hour (Energy Dependent)
-
----
-
-### **🚀 MANDATORY (2 Hours)**
-
-#### **Task 1: DSA — Hash Maps & Grouping (45 Minutes)**
-**Goal:** Master the "Key Generation" pattern (critical for distributed shuffling).
-1.  **Log in to LeetCode.**
-2.  **Solve Problem #49: "Group Anagrams" (Medium).**
-    * **Requirement:** Pass all test cases.
-    * **Hint:** If two words are anagrams, they share the same "signature" (e.g., sorted letters). Use a Hash Map where `Key = Signature` and `Value = List of Words`.
-
-#### **Task 2: Databricks Academy — Optimization Theory (60 Minutes)**
-**Goal:** Internalize Data Skew mechanics without writing code yet.
-1.  **Log in to Databricks Partner Academy.**
-2.  **Search:** "Databricks Certified Data Engineer Professional" (or Optimization module).
-3.  **Action:** Complete the module/videos on **Data Modeling** or **Performance**.
-4.  **Specific Focus:**
-    * Causes of **Data Skew**.
-    * The **Salting** technique.
-    * How the **Catalyst Optimizer** handles joins.
-5.  **Deliverable:** Write a brief summary (bullet points) in a text file explaining *how Salting fixes skew*.
-
-#### **Task 3: Repository Initialization (15 Minutes)**
-**Goal:** Establish portfolio structure.
-1.  **Create/Open GitHub Repository:** `data-engineering-portfolio-2026`.
-2.  **Commit Your Work:**
-    * `DSA/Group_Anagrams.py`
-    * `Week1/Day1/NOTES.md`
-3.  **Push** to main.
+**Phase:** Week 1 (Core Engineering & Architecture)
+**Focus:** Algorithmic Patterns, Spark Internals, and Local AI Inference.
+**Estimated Time:** 2 Hours
 
 ---
 
-### **⚡ OPTIONAL STRETCH TASKS (If High Energy)**
-
-#### **Task A: Azure Fabric Primer (15 Minutes)**
-* **Action:** Watch a short intro video on **"Microsoft Fabric OneLake"**.
-* **Why:** Fabric is the biggest competitor to Databricks right now. You need to know the jargon (OneLake vs. Delta Lake).
-* **Deliverable:** Add 1 line to your `NOTES.md`: "OneLake is essentially..."
-
-#### **Task B: Local GenAI Setup (Home/Personal Laptop Only)**
-* **Action:** Install **Ollama** locally.
-* **Command:** Run `ollama run llama3` (or `mistral`) in your terminal.
-* **Deliverable:** Screenshot of the LLM answering "Hello".
+### **1. Objectives**
+* **Algorithmic Proficiency:** Master the "Key Generation" pattern for handling grouped data, a prerequisite for understanding distributed shuffle operations.
+* **Data Engineering Internals:** Deepen understanding of **Data Skew**, its impact on distributed systems, and remediation strategies like **Salting**.
+* **AI Engineering Setup:** Establish a local Large Language Model (LLM) environment for private, cost-free inference.
 
 ---
 
-### 🛡️ **REQUIRED PROOFS TO UNLOCK DAY 2**
+### **2. Technical Execution Tasks**
 
-**Submission:**
-1.  **[GitHub Link]** Link to your repo with `DSA/` code and `NOTES.md`.
-2.  **[One Sentence]** Explain the logic you used for the Anagram key.
+#### **2.1 Algorithmic Challenge (DSA)**
+* **Problem:** Group Anagrams (LeetCode #49).
+* **Engineering Context:** This problem simulates the logic required for **MapReduce** and **Spark Shuffle** operations (grouping data by a derived key).
+* **Requirement:** Implement a solution using a Hash Map strategy where `Key = Signature` (e.g., sorted string or character count) and `Value = List of Strings`.
+* **Success Metric:** Pass all test cases with optimal time complexity ($O(N \cdot K)$ or $O(N \cdot K \log K)$).
 
-**Status:** Awaiting your proofs.
+#### **2.2 Spark Optimization (Architecture)**
+* **Topic:** Performance Tuning in Distributed Systems.
+* **Resource:** Databricks Academy / Official Documentation.
+* **Key Concepts to Master:**
+    * **Data Skew:** Identification of straggler tasks in the Spark UI.
+    * **Salting:** The architectural pattern of adding high-cardinality noise to keys to force uniform partition distribution.
+    * **Catalyst Optimizer:** High-level understanding of join strategies (Broadcast vs. Sort-Merge).
+
+#### **2.3 GenAI Environment (Local Inference)**
+* **Tool:** Ollama / Local LLM.
+* **Action:**
+    1.  Deploy a local model (e.g., `llama3`, `mistral`).
+    2.  Develop a Python interface script to query the model programmatically.
+* **Validation:** Successfully execute a prompt asking for a technical definition (e.g., *"Explain Data Lakehouse architecture"*).
+
+---
+
+### **3. Portfolio Deliverables**
+
+To complete Day 1, the following artifacts must be committed to the repository `data-engineering-portfolio-2026`:
+
+1.  **`DSA/Group_Anagrams.py`**:
+    * Contains the optimized Python solution for the algorithm.
+    * Includes comments explaining the Time/Space complexity.
+
+2.  **`Week1/Day1/JOURNAL.md`**:
+    * **Engineering Log:** A structured summary of the day's work.
+    * **Optimization Notes:** A concise explanation (3-5 bullet points) of **how Salting mitigates Data Skew**.
+    * **AI Validation:** A log entry confirming the local model's successful response.
+
+---
+
+### **4. Self-Review Checklist**
+- [ ] Algorithm passes all edge cases (empty strings, single characters).
+- [ ] "Salting" concept is clearly understood and documented.
+- [ ] Local AI environment is operational for future agentic workflows.
+- [ ] All artifacts are pushed to the `main` branch.
+
+---
+
+### 🛡️ **Mentor Check-In (Unlock Day 2)**
+
+**To proceed to Day 2, please submit:**
+1.  The link to your `JOURNAL.md` file.
+2.  A brief answer to this verification question:
+    * *"In a Salted Join, if you salt the skew key with a range of 1-5, by what factor does the size of the skewed partition theoretically decrease?"*
