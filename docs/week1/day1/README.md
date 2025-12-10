@@ -1,75 +1,67 @@
-# 🚀 **Day 1: Foundations & Architecture**
+# 🚀 **Day 1: Technical Foundations & Brand Strategy**
 
-**Phase:** Week 1 (Core Patterns & Internals)
-**Focus:** Algorithmic Warm-up, Distributed Storage Internals, and Local AI Setup.
-**Context:** Professional Execution (Workstation) & Portfolio Sync (Personal Device).
+**Phase:** Week 1 (Core Patterns, Internals & Brand Audit)
 
----
+**Focus:** Algorithmic Warm-up, Distributed Systems, and Professional Identity.
 
-### **1. Objectives**
-* **Algorithmic Proficiency:** Re-establish muscle memory for **Hash Maps** and **Frequency Counters**, the foundational building blocks for distributed shuffling.
-* **Data Engineering Internals:** Master **Data Skew** and **Salting** (Databricks DE Professional Domain 3.0).
-* **System Design:** Understand the fundamental storage trade-offs (Row-oriented vs. Column-oriented) used in modern Lakehouses.
-* **GenAI Engineering:** Verify local inference capabilities.
+**Time Allocation:** ~2 Hours Mandatory (Split between Phases).
 
 ---
 
-### **2. DSA Challenge: Arrays & Hashing**
-**Goal:** Solve 3 Mandatory problems. Attempt 2 Optional if time permits.
+### **Phase 1: Engineering Execution (Corporate Environment)**
+**Context:** Restricted Environment (Code execution & Theory only).
 
-#### **Mandatory (The Core 3)**
-1.  **Contains Duplicate** (LeetCode #217)
-    * *Focus:* Efficient lookups ($O(1)$) vs. scanning ($O(N)$).
-2.  **Valid Anagram** (LeetCode #242)
-    * *Focus:* Frequency counting. This mimics how Spark counts terms in a dataset.
-3.  **Group Anagrams** (LeetCode #49)
-    * *Focus:* Key generation strategies. This simulates the logic behind a **Shuffle/GroupBy** operation in Spark.
+#### **1. Algorithmic Strategy (DSA)**
+* **Objective:** Master key-value mapping logic, a precursor to distributed shuffling.
+* **Task:** Solve 3 Mandatory Problems (LeetCode).
+    1.  **Contains Duplicate** (#217) - $O(1)$ Lookup efficiency.
+    2.  **Valid Anagram** (#242) - Frequency Counting strategy.
+    3.  **Group Anagrams** (#49) - Key Generation strategy.
+* **Deliverable:** Local code files or mental verification of the "Signature" logic.
 
-#### **Optional (Stretch)**
-4.  **Two Sum** (LeetCode #1)
-    * *Focus:* Complement lookups.
-5.  **Top K Frequent Elements** (LeetCode #347)
-    * *Focus:* Heaps or Bucket Sort (Optimization).
+#### **2. Distributed Architecture (Certification Prep)**
+* **Topic:** **Data Skew & Salting** (Databricks DE Pro Domain 3.0).
+* **Action:** Complete the Academy module on Performance Optimization.
+* **Key Insight to Log:** Precisely *how* salting (adding random noise to keys) forces the Catalyst Optimizer to redistribute data partitions.
 
----
-
-### **3. Certification Track: Databricks DE Professional**
-* **Module:** Performance Optimization (Partitioning & Shuffle).
-* **Resource:** Databricks Partner Academy / Documentation.
-* **Task:** Complete the module on **Data Skew**.
-* **Key Concepts to Log:**
-    * **Identification:** How to spot skew in the Spark UI (straggler tasks).
-    * **Mitigation:** The specific mechanics of **Salting** (adding randomness to high-cardinality keys).
-
----
-
-### **4. System Design Primer**
+#### **3. System Design Primer**
 * **Topic:** **Row-Oriented vs. Column-Oriented Storage**.
-* **Task:** Research and document the core difference.
-* **Guiding Questions for Notes:**
-    * Why is **Parquet** (Columnar) superior for analytical queries (OLAP) like `SUM` or `AVG`?
-    * Why is **Postgres** (Row-based) superior for transactional updates (OLTP)?
+* **Research:** Why is Parquet/Delta (Columnar) critical for OLAP (Analytics) but poor for OLTP (Transactional)?
+* **Deliverable:** 1-sentence summary for your notes.
 
 ---
 
-### **5. GenAI Lab (Local Environment)**
-* **Task:** Verify local LLM function.
+### **Phase 2: Portfolio Sync & Personal Growth (Personal Environment)**
+**Context:** Open Environment (Repo Push, Branding, Networking).
+
+#### **4. Repository Synchronization**
+* **Repo:** `data-engineering-portfolio-2026`
 * **Action:**
-    1.  Pull model: `ollama pull llama3` (or `mistral`).
-    2.  Execute a test prompt via Python or CLI: *"Explain 'Vector Embeddings' to a data engineer in 2 sentences."*
-* **Outcome:** Confirm text generation works without external API calls.
+    * Commit `DSA/` solutions.
+    * Update `Week1/Day1/JOURNAL.md` with your summaries for Skew, Salting, and Storage formats.
+
+#### **5. Freelance & Brand Audit (Personal Growth)**
+* **Objective:** Prepare your profile for high-ticket "Data Optimization" or "GenAI" contracts.
+* **Task:** **Profile Audit.**
+    * Review your existing Upwork/Freelance profile (or LinkedIn "Service Page").
+    * **Action:** Draft a new **"Headline"** that combines your experience.
+    * *Draft Idea:* "Senior Data Engineer | PySpark & Databricks Optimization Specialist | GenAI Integrations."
+    * *Note:* We are moving away from generic "Web Dev" gigs toward high-value Data/AI consulting.
+
+#### **6. Strategic Networking**
+* **Objective:** Build presence without "noise."
+* **Task:** **Targeted Engagement.**
+    * Identify 2 posts from Senior Data Engineers or AI Founders on LinkedIn.
+    * **Action:** Leave a **technical comment** (not just "Great post"). Add value or ask a specific architectural question.
+    * *Goal:* Be seen as a peer, not just a learner.
 
 ---
 
-### **6. Portfolio Sync (Personal Device)**
-* **Repository:** `data-engineering-portfolio-2026`
-* **Action:**
-    1.  **DSA:** Update `DSA/` with your solutions (re-typed or pasted).
-    2.  **Journal:** Update `Week1/Day1/JOURNAL.md` with:
-        * **DSA Log:** A brief note on the "Signature" logic used for Group Anagrams.
-        * **Certification Log:** 3 bullet points defining *Data Skew*.
-        * **System Design:** A 1-sentence summary of when to use Columnar storage.
-        * **GenAI Log:** The definition of "Vector Embeddings" provided by your local model.
+### **⚡ Phase 3: The "Passion Project" (Optional / Decompression)**
+**Context:** Hobby / Game Dev.
+* **Topic:** **Unity/Websockets** (Your specific interest).
+* **Task:** Create a dedicated folder in your personal workspace (e.g., `Project_CoOp_Lab`).
+* **Action:** Just set up the Git repo for this side project. No coding required yet—just carve out the digital space for your creativity.
 
 ---
 
@@ -77,5 +69,8 @@
 
 To clear Day 1, please submit:
 
-1.  **[GitHub Link]** Your `JOURNAL.md` containing the summary of today's work.
-2.  **[The Answer]** In your reply, answer this verification question: *In a Salted Join, if you salt the skew key with a range of 1-5, by what factor does the size of the skewed partition theoretically decrease?*
+1.  **[GitHub Link]** Your `JOURNAL.md` containing the technical summaries (Skew, DSA logic).
+2.  **[Brand Draft]** The new **"Headline"** you drafted for your Freelance/LinkedIn profile.
+3.  **[The Answer]** Verification Question: *In a Salted Join, if you salt the skew key with a range of 1-5, by what factor does the size of the skewed partition theoretically decrease?*
+
+**Status:** Awaiting your submission.
