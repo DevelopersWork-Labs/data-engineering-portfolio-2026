@@ -1,71 +1,72 @@
-# 🚀 **Day 4: Skew Remediation & Vector Indexing**
+# 🚀 Day 5: Pointers & Distributed Consistency
 
-**Phase:** Week 1 (Core Patterns & Internals)
-
-**Focus:** Coding the "Salting" logic, Fixed-Size Sliding Windows, and Vector Database Internals.
-
-**Time Allocation:** ~2 Hours (Weekday Sprint).
+**Phase:** Week 1 (Core Patterns & Internals)  
+**Focus:** Linked List Memory Management, CAP Theorem, and RAG Architecture.  
+**Estimated Time:** 2.0 Hours  
 
 ---
 
-### **Phase 1: Algorithmic Engineering (DSA)**
-**Context:** Fixed-Size Sliding Window | Time: ~45 Mins
-
-**1. Permutation in String** (LeetCode #567)
-* **Pattern:** **Fixed-Size Sliding Window**.
-* **Logic:** Unlike the "Longest Substring" problem (Day 3) where the window size changed, here the window size is fixed to the length of string `s1`.
-* **Task:** Check if `s2` contains a permutation of `s1`.
-* **Hint:** Use two frequency arrays (or Hash Maps). Slide the window over `s2`, adding the new character and removing the old one. If `freq_array(window) == freq_array(s1)`, you found it.
-
-**2. Max Consecutive Ones III** (LeetCode #1004) [Stretch / Highly Recommended]
-* **Pattern:** Sliding Window with "Budget" ($K$ flips).
-* **Logic:** Expand right. If you hit a zero, decrement $K$. If $K < 0$, shrink left.
+## 🎯 Objectives
+1.  **Algorithmic Proficiency:** Master pointer manipulation and iterative merging logic, the foundational operations for query engines (Sort-Merge Joins) and file systems.
+2.  **System Design:** Analyze trade-offs in distributed data systems using the **CAP Theorem** (Consistency vs. Availability).
+3.  **GenAI Architecture:** Deconstruct the standard **RAG (Retrieval-Augmented Generation)** pipeline into its 5 core components.
 
 ---
 
-### **Phase 2: Platform Architecture (Applied Coding)**
-**Context:** PySpark Implementation | Time: ~45 Mins
+## 🛠️ Phase 1: Algorithmic Engineering (DSA)
+**Context:** Pointers & Memory Management  
 
-**3. Implementing the "Salted Join"**
-* **Goal:** You know the *theory* of Salting (Day 1/2). Now write the **production code**.
-* **Scenario:** You have a skewed DataFrame `df_large` and a small DataFrame `df_small`. You need to join them on `user_id`.
-* **Task:** Write a Python/PySpark function snippet (in your local editor) that performs these steps:
-    1.  **Salt the Large Table:** Add a new column `salt` with a random integer (0 to $N$).
-    2.  **Explode the Small Table:** Duplicate every row in the small table $N$ times (one for each salt value).
-    3.  **Join:** Join on `user_id` AND `salt`.
-* **Deliverable:** A code snippet in `Week1/Day4/salted_join.py`. (You don't need to execute it if you don't have a cluster, just write the correct syntax).
+### 1. Reverse Linked List (LeetCode #206)
+* **Pattern:** Two Pointers (Iterative).
+* **Engineering Relevance:** Manipulating pointers (`next`, `prev`) mimics how databases link data pages and how distributed logs chain commits.
+* **Constraint:** Solve in $O(N)$ Time and $O(1)$ Space.
 
----
-
-### **Phase 3: GenAI Architecture (Vector Stores)**
-**Context:** Theory & Indexing | Time: ~30 Mins
-
-**4. The Vector Database & HNSW**
-* **Topic:** **Approximate Nearest Neighbor (ANN)** search.
-* **Problem:** If you have 1 Million embeddings, calculating Cosine Similarity against *all* of them (Brute Force) is too slow ($O(N)$).
-* **Solution:** **HNSW (Hierarchical Navigable Small World)**.
-* **Research:** How does HNSW allow us to find similar vectors in $O(\log N)$ time? (Think of it like a "Skip List" for graphs).
-* **Deliverable:** A simple analogy for HNSW in your notes.
+### 2. Merge Two Sorted Lists (LeetCode #21)
+* **Pattern:** Merge Step.
+* **Engineering Relevance:** This algorithm is the engine behind **Sort-Merge Joins** in Spark and SQL. Understanding this logic is key to optimizing large-scale shuffles.
+* **Logic:** Compare heads of $L1$ and $L2$, attach the smaller node to the result, and advance the pointer.
 
 ---
 
-### **Phase 4: Portfolio Sync**
-**Context:** Personal Device | Time: ~15 Mins
+## 🏗️ Phase 2: Distributed Architecture
+**Context:** System Design & Trade-offs  
 
-**5. Repository Synchronization**
-* **Repo:** `data-engineering-portfolio-2026`
-* **Action:**
-    * Commit `DSA/Day4/` solutions.
-    * Commit `Week1/Day4/salted_join.py` (Your Salting function).
-    * Update `Week1/Day4/JOURNAL.md` with your HNSW analogy.
+### 3. The CAP Theorem & Eventual Consistency
+* **Topic:** Distributed System Constraints.
+* **Research Task:** Analyze the **CAP Theorem** (Consistency, Availability, Partition Tolerance).
+    * **CP Systems:** (e.g., HBase, traditional RDBMS) Prioritize consistency; system may become unavailable during network partitions.
+    * **AP Systems:** (e.g., Cassandra, DNS) Prioritize availability; system accepts writes during partitions but risks "stale" reads.
+* **Critical Analysis:**
+    * **Scenario:** Is **Delta Lake on S3** a CP or AP system? S3 is eventually consistent (AP), but Delta adds a transaction log. How does this shift the classification?
 
 ---
 
-### 🛡️ **Mentor Check-In (Unlock Day 5)**
+## 🤖 Phase 3: GenAI Architecture
+**Context:** RAG Pipeline Design  
 
-To clear Day 4, submit:
+### 4. The 5-Step RAG Pipeline
+* **Topic:** Retrieval-Augmented Generation.
+* **Task:** Define the standard workflow for Project 3.
+* **Components:**
+    1.  **Ingestion:** Extracting text from raw sources (PDFs, HTML).
+    2.  **Chunking:** Splitting text into context-aware segments (handling overlap).
+    3.  **Embedding:** Converting chunks into dense vector representations.
+    4.  **Retrieval:** Performing Vector Similarity Search (ANN) to find Top-K context.
+    5.  **Generation:** Injecting context + query into the LLM context window for the final answer.
 
-1.  **[GitHub Link]** Your `salted_join.py` file. (I want to see the `explode` logic).
-2.  **[The Answer]** Verification Question: *In a Vector DB, if I use an "Inverted File Index" (IVF), I partition the vector space into clusters. When a query comes in, do I search ALL clusters or just the closest ones?*
+---
 
-**Code the solution.**
+## 📝 Phase 4: Portfolio & Deliverables
+
+### Repository Synchronization
+* **Location:** `data-engineering-portfolio-2026`
+* **Actions:**
+    * [ ] Commit optimized C++ solutions for **#206** and **#21** to `dsa/day5/`.
+    * [ ] Update `docs/Week1/Day5/JOURNAL.md` with:
+        * **CAP Analysis:** Classification of Delta Lake (Acid vs. Eventual Consistency).
+        * **RAG Definitions:** Brief 1-sentence architectural definitions for the 5 steps.
+
+### ✅ Verification Question
+> *If you merge two sorted linked lists of size 1 Million each, how many comparisons will the algorithm perform in the absolute worst-case scenario?*
+
+---
