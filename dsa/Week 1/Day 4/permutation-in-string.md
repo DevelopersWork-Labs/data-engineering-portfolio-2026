@@ -24,14 +24,14 @@ public:
                 ch = s2[j++];
                 freq[ch]--;
                 if(freq[ch] < 0) break;
-                if(count(freq.begin(), freq.end(), 0) == 256)
+                if(j-i >= n && count(freq.begin(), freq.end(), 0) == 256)
                     return true;
             }
             while(i<j && freq[ch] < 0){
                 freq[s2[i]]++;
                 i++;
             }
-            if(count(freq.begin(), freq.end(), 0) == 256)
+            if(j-i >= n && count(freq.begin(), freq.end(), 0) == 256)
                 return true;
         }
 
