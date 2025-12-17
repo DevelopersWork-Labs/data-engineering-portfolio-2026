@@ -1,5 +1,9 @@
 # 21. Merge Two Sorted Lists - [leetcode](https://leetcode.com/problems/merge-two-sorted-lists/?envType=problem-list-v2&envId=vsm9u0sh&)
 
+## 📝 Problem Description
+--
+
+## 📖 Solution: C++
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -57,3 +61,8 @@ public:
     }
 };
 ```
+- **Time Complexity**: O(m+n)
+- **Space Complexity**: O(1)
+### 📝 Reviewer Notes
+
+--

@@ -1,5 +1,9 @@
 # 206. Reverse Linked List - [leetcode](https://leetcode.com/problems/reverse-linked-list/?envType=problem-list-v2&envId=vsm9u0sh&)
 
+## 📝 Problem Description
+--
+
+## 📖 Solution: C++
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -27,3 +31,8 @@ public:
     }
 };
 ```
+- **Time Complexity**: O(n)
+- **Space Complexity**: O(1)
+### 📝 Reviewer Notes
+
+--
