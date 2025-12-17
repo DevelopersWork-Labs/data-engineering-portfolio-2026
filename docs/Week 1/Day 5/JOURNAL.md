@@ -24,17 +24,44 @@ After one list was exhausted, appended the remaining nodes from the other list t
 
 ## Phase 2 — Distributed Architecture
 
-----
+### 2.3. CAP Theorem & Eventual Consistency
+Reviewed the CAP theorem and its implications in distributed systems.
+
+- **Consistency:** Ensures that all nodes in a distributed system return the same, most recent data.
+- **Availability:** Guarantees that every request receives a response, regardless of node state.
+- **Partition Tolerance:** Ensures the system continues to operate despite network partitions.
+
+Noted that partition tolerance is non-negotiable in distributed systems, leaving a trade-off between consistency and availability.
+
+Studied how Amazon S3 operates as an **AP system** at the storage level.  
+Observed that layering **Delta Lake** on top of object storage introduces transactional guarantees, effectively enforcing **CP behavior** by maintaining a transaction history through the `_delta_log`.
+
+---
 
 ## Phase 3 — GenAI Architecture
 
-----
+### 3.4. The 5-Step RAG Pipeline
+Reviewed the Retrieval-Augmented Generation (RAG) workflow and its core stages:
+
+**Workflow:** _Ingestion → Chunking → Embedding → Retrieval → Generation_
+
+- **Ingestion:** Collecting data from sources such as PDFs, HTML pages, and databases.
+- **Chunking:** Splitting large documents into smaller, context-preserving segments.
+- **Embedding:** Converting text chunks into vector representations.
+- **Retrieval:** Performing similarity search using ANN techniques to find relevant context vectors.
+- **Generation:** Supplying the retrieved context along with the user query to an LLM to generate responses.
+
+---
 
 ## Verification Question
-> *If you merge two sorted linked lists of size 1 Million each, how many comparisons will the algorithm perform in the absolute worst-case scenario?*
 
-**Answer:** 
+**Question:**  
+*If you merge two sorted linked lists of size 1 million each, how many comparisons will the algorithm perform in the absolute worst-case scenario?*
+
+**Answer:**  
+- **Best Case:** 1,000,000 comparisons, when all elements of one list are either smaller or larger than the other.
+- **Worst Case:** 1,999,999 comparisons, when elements from both lists are perfectly interleaved.
 
 ----
 
-# ✔️ Day 5 Status: _IN PROGRESS_
+# ✔️ Day 5 Status: _CLEARED_
