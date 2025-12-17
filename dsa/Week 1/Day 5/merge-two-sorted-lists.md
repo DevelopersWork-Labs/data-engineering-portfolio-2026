@@ -1,7 +1,12 @@
 # 21. Merge Two Sorted Lists - [leetcode](https://leetcode.com/problems/merge-two-sorted-lists/?envType=problem-list-v2&envId=vsm9u0sh&)
 
 ## 📝 Problem Description
---
+
+You are given the heads of two sorted linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
 
 ## 📖 Solution: C++
 ```cpp
@@ -50,4 +55,8 @@ public:
 - **Space Complexity**: O(1)
 ### 📝 Reviewer Notes
 
---
+- **Iterative Approach**: The solution efficiently merges the two lists by comparing the head nodes and re-linking them, avoiding the stack overhead of recursion.
+- **Pointer Management**: It uses a `curr` pointer to build the new list and a `temp` pointer to extract nodes from the input lists.
+- **Edge Cases**: The code correctly handles cases where one list is empty or shorter than the other by appending the remainder of the non-empty list at the end.
+- **Optimization Tip**: Using a dummy head node (`ListNode dummy(0); ListNode* curr = &dummy;`) would simplify the logic by eliminating the `if (!list)` conditional checks inside the loop.
+
