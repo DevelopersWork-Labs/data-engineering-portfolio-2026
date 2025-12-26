@@ -5,7 +5,22 @@
 ----
 ## 🏗️ Phase 1: Project 1 Implementation (Bronze Layer)
 
-**PLACEHOLDER**
+### Raw Data Ingestion to Bronze Table
+Implemented a reusable ingestion function to load raw CSV data into a Bronze Delta table.
+
+Read source CSV files with headers enabled and schema inference disabled.  
+Standardized column names by converting them to lowercase and replacing spaces with underscores.
+
+Added ingestion metadata columns:
+- `_hash_md5`: MD5 hash generated from all source columns to uniquely identify records.
+- `_ingest_timestamp`: Timestamp capturing the ingestion time.
+- `_ingest_author`: User who performed the ingestion.
+- `_source_file`: Path of the source file from which the data was ingested.
+
+Wrote the transformed dataset to a Delta table using overwrite mode with schema merge enabled.  
+Persisted the data as a managed Delta table under the Bronze layer namespace.
+
+Validated the ingestion by reading from the Bronze table and displaying the results.
 
 ----
 ## 🛠️ Phase 2: DSA Workshop (Stacks)
