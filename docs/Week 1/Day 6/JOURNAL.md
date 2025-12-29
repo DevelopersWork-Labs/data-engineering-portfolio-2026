@@ -55,7 +55,8 @@ Returned the final value remaining on the stack after processing all tokens.
 ---
 ## 🤖 Phase 3: GenAI Infrastructure Prep
 
-**PLACEHOLDER**
+Created an account on Pinecone and generated an API key to enable future vector database integration and GenAI use cases.
+![alt text](image.png)
 
 ----
 ## Verification Question
@@ -64,8 +65,10 @@ Returned the final value remaining on the stack after processing all tokens.
 *If I process a CSV file today with 5 columns, and tomorrow I receive a CSV with 6 columns, what happens to my Bronze Delta Table if `mergeSchema` is set to `false`?*
 
 **Answer:**  
-- ...
+- The write operation fails because the incoming data schema does not match the existing table schema.
+- When `mergeSchema` is enabled, Delta Lake merges the new columns into the existing table schema and updates it accordingly.
+- Delta Lake also provides the `overwriteSchema` option, which replaces the existing table schema entirely with the new schema during an overwrite operation.
 
 ----
 
-# ✔️ Day 6 Status: _IN-PROGRESS_
+# ✔️ Day 6 Status: _IN-REVIEW_
