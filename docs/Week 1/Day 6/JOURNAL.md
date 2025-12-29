@@ -71,4 +71,4 @@ Created an account on Pinecone and generated an API key to enable future vector 
 
 ----
 
-# ✔️ Day 6 Status: _IN-REVIEW_
+# ✔️ Day 6 Status: _CLEARED_
