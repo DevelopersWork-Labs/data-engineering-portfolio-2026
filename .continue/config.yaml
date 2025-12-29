@@ -1,0 +1,140 @@
+name: Continue Config
+version: 0.0.1
+schema: v1
+
+
+models:
+  # 1.1. THE BRAIN (Logic & Math)
+  - name: DeepSeek R1 (Logic)
+    provider: ollama
+    model: deepseek-r1:8b
+    roles:
+      - chat
+    chatOptions:
+      baseSystemMessage: "You are a deep thinking AI. Use your Chain of Thought to plan complex coding tasks before answering."
+ 
+  # 1.2. THE CREATIVE (Chat & Writing)
+  - name: Qwen 3 (Creative)
+    provider: ollama
+    model: qwen3:8b
+    roles:
+      - chat
+ 
+  # 1.3. THE SPEEDSTER (Quick Questions)
+  - name: Llama 3.2 (Fast)
+    provider: ollama
+    model: llama3.2:3b
+    roles:
+      - chat
+ 
+  # 2.1. THE CODING HEAVYWEIGHT (Best Quality)
+  - name: Qwen 2.5 14B (Best Quality)
+    provider: ollama
+    model: qwen2.5-coder:14b
+    roles:
+      - chat
+      - edit
+      - apply
+    chatOptions:
+      baseSystemMessage: "You are the smartest coding assistant available. Prioritize correctness and modern best practices."
+ 
+  # 2.2. THE FAST EXPERT (MoE Architecture)
+  - name: DeepSeek V2 (Fast Expert)
+    provider: ollama
+    model: deepseek-coder-v2:16b
+    roles:
+      - chat
+      - edit
+      - apply
+    chatOptions:
+      baseSystemMessage: "You are an expert software architect. You handle complex refactoring and deep debugging."
+ 
+  # 2.3. THE BALANCED CODER (Low RAM)
+  - name: Qwen 2.5 7B (Balanced/Light)
+    provider: ollama
+    model: qwen2.5-coder:7b
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+    promptTemplates:
+      autocomplete: |
+        `<|fim_prefix|>{{{prefix}}}<|fim_suffix|>{{{suffix}}}<|fim_middle|>`
+  
+  # 2.4. THE CODING EXPERT
+  - name: MagicCoder 7B (Code Expert)
+    provider: ollama
+    model: magicoder:7b
+    roles:
+      - chat
+      - edit
+      - apply
+ 
+  # 3. AUTOCOMPLETE (Ghost Text)
+  - name: Qwen Coder (Speed)
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+    roles:
+      - autocomplete
+    promptTemplates:
+      autocomplete: |
+        `<|fim_prefix|>{{{prefix}}}<|fim_suffix|>{{{suffix}}}<|fim_middle|>`
+ 
+  # 4. EMBEDDINGS (Codebase Search)
+  - name: Embeddings Model
+    provider: ollama
+    model: nomic-embed-text:v1.5
+    roles:
+      - embed
+
+
+context:
+  - provider: file
+  - provider: code
+  - provider: diff
+  - provider: terminal
+
+
+customCommands:
+  # Create a commit message from the current editor diff context
+  - name: commit-message
+    description: Generate a Conventional Commit message from current changes
+    useContext:
+      - diff
+    prompt: |
+      You are a code assistant that writes excellent commit messages.
+      Read the provided diff and produce:
+
+      1) A single-line Conventional Commit subject (e.g., "feat(auth): add JWT refresh flow")
+      2) A short body (2–6 bullets) highlighting key changes and rationale
+      3) If relevant, include "BREAKING CHANGE:" and reference issues (e.g., "Closes #123")
+
+      Constraints:
+      - Subject: ≤ 72 chars, imperative mood, no trailing period
+      - Use concise, developer-friendly phrasing
+      - Group bullets by modules/files only if useful
+      - Avoid restating code verbatim; summarize intent/impact
+
+      Diff:
+      {{diff}}
+
+  # Create a commit message strictly from staged changes in Git
+  - name: commit-staged
+    description: Generate a Conventional Commit message from `git diff --staged`
+    useContext:
+      - terminal
+    command:
+      runInTerminal: true
+      args:
+        - git diff --staged
+    prompt: |
+      Generate a Conventional Commit subject and a short bullet body from the following staged changes.
+      Constraints:
+      - Subject: ≤ 72 chars, imperative mood, no trailing period
+      - Use concise, developer-friendly phrasing
+      - Group bullets by modules/files only if useful
+      - Avoid restating code verbatim; summarize intent/impact
+      Staged diff: {{terminal_output}}
+
+ 
