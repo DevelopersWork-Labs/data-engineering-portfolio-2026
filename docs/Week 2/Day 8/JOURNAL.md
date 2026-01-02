@@ -1,4 +1,4 @@
-# 📘 Week 1 — Day 7 Journal  
+# 📘 Week 2 — Day 8 Journal  
 
 **Date:** 02/01/2026
 
@@ -44,6 +44,13 @@ Verified the pipeline execution using the job run graph view, confirming correct
 ----
 ## 📐 Phase 3: System Design
 
+Reviewed differences between DAG-based orchestrators and traditional CRON scheduling.
+
+- DAG-based orchestrators provide a graphical interface to define, visualize, and manage workflow dependencies.
+- CRON jobs are suitable for simple, independent tasks but do not natively support complex dependencies or multi-step workflows.
+- In DAG-based systems, if a task fails, only the failed task (or its downstream dependencies) can be re-run without re-executing the entire workflow.
+- With CRON-based workflows, failures typically require re-running the full job or manual intervention, increasing operational complexity and risk of errors.
+
 ----
 ## Verification Question
 
@@ -51,10 +58,10 @@ Verified the pipeline execution using the job run graph view, confirming correct
 *In a Binary Search on a sorted array of size 1,000,000, what is the **maximum** number of comparisons needed to find an element? (Approximate is fine).*
 
 **Answer:**  
-- in binary search, the amount of comparisons is O(log n)
-- so every iterations amount of comparisions to be done will get halfed. 1m->500k->250k->125k->62k->31k->15k->7k->3k->1k->500->250->125->62->31->15->7->3->1
-- so the maximum number of comparisons needed to find an element is 20
+- Binary search reduces the search space by half on each comparison.
+- For an array of size 1,000,000, the maximum number of comparisons required is approximately `log₂(1,000,000)`.
+- This evaluates to about **20 comparisons** in the worst case.
 
 ----
 
-# ✔️ Day 8 Status: _IN-PROGRESS_
+# ✔️ Day 8 Status: _CLEARED_
