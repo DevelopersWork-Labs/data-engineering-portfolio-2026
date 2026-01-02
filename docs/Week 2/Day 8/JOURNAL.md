@@ -24,6 +24,23 @@ Returned a boolean result indicating whether the target exists in the matrix.
 ----
 ## 🏗️ Phase 2: Engineering Orchestration
 
+Created a Databricks Job named `retail360_daily_pipeline` to automate the execution of the Lakehouse pipeline using a task-based workflow.
+
+Configured the job with three dependent tasks:
+- **Bronze Task:** Executes the `01_ingest_bronze` notebook to ingest raw data.
+- **Silver Task:** Executes the `02_transform_silver` notebook and is configured to run after the Bronze task.
+- **Gold Task:** Executes the `03_model_gold` notebook and is configured to run after the Silver task.
+
+Defined task dependencies to enforce the execution order: Bronze → Silver → Gold.
+
+Executed the job manually using the “Run Now” option and observed a successful run:
+- All three tasks completed successfully.
+- Each task ran sequentially based on the configured dependencies.
+- The workflow execution completed without errors.
+
+Verified the pipeline execution using the job run graph view, confirming correct orchestration of the end-to-end Lakehouse process.
+![alt text](image.png)
+
 ----
 ## 📐 Phase 3: System Design
 
@@ -34,6 +51,9 @@ Returned a boolean result indicating whether the target exists in the matrix.
 *In a Binary Search on a sorted array of size 1,000,000, what is the **maximum** number of comparisons needed to find an element? (Approximate is fine).*
 
 **Answer:**  
+- in binary search, the amount of comparisons is O(log n)
+- so every iterations amount of comparisions to be done will get halfed. 1m->500k->250k->125k->62k->31k->15k->7k->3k->1k->500->250->125->62->31->15->7->3->1
+- so the maximum number of comparisons needed to find an element is 20
 
 ----
 
