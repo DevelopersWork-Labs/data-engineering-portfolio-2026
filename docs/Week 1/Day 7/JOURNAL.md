@@ -61,6 +61,19 @@ Verified queue behavior by testing enqueue, dequeue, peek, and empty operations.
 ----
 ## 🤖 Phase 4: GenAI "Hello Vector"
 
+Implemented a basic end-to-end vector database workflow using Pinecone.
+
+Installed and imported the Pinecone client library and initialized the client using an API key provided through environment variables.
+
+Created a serverless Pinecone index named `day7-hello-vector` with:
+- Vector dimension set to 3
+- Cosine similarity as the distance metric
+- AWS as the cloud provider and `us-east-1` as the region
+
+Connected to the created index and upserted a dummy vector with an associated metadata payload.
+
+Executed a similarity query against the index using a query vector and retrieved the closest matching vector along with its metadata to validate end-to-end connectivity and query functionality.
+
 ----
 ## Verification Question
 
@@ -68,7 +81,9 @@ Verified queue behavior by testing enqueue, dequeue, peek, and empty operations.
 *In the Silver Layer, if I receive a record with the same `InvoiceNo` but a different `Quantity` than what is currently in the table, what specific Delta command ensures the record is updated rather than duplicated?*
 
 **Answer:**  
+- The `DeltaTable.merge()` command is used to perform an upsert operation. When a matching condition is satisfied, the existing record is updated; when no match is found, a new record is inserted.
+- The same `merge` operation can also be configured to delete records when a match condition is met.
 
 ----
 
-# ✔️ Day 7 Status: _IN-PROGRESS_
+# ✔️ Day 7 Status: _IN-REVIEW_
