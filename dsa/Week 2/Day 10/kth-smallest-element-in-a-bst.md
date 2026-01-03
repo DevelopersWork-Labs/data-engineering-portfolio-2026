@@ -38,3 +38,6 @@ public:
 - **Space Complexity**: $O(n)$
 ### 📝 Reviewer Notes
 
+- The solution correctly leverages the property that an in-order traversal of a Binary Search Tree (BST) visits nodes in ascending order.
+- **Space Optimization**: Currently, the solution uses $O(n)$ space to store all node values in a vector. This can be optimized to $O(h)$ (where $h$ is the height of the tree) by using a counter to track the number of nodes visited and returning the value immediately upon reaching the $k$-th element.
+- **Early Exit**: The current `inordertraversal` visits every node in the tree regardless of the value of $k$. Implementing an early exit once the $k$-th smallest element is found would improve performance, especially for small values of $k$ in large trees.
