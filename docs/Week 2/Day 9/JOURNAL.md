@@ -54,6 +54,14 @@ Verified that the failure was correctly surfaced in the Databricks job run detai
 ## 📐 Phase 3: System Design
 
 ### 5. The WAP Pattern (Write-Audit-Publish)
+Reviewed the Write-Audit-Publish (WAP) pattern used to ensure atomic and consistent data writes.
+
+Understood that data is written in an all-or-nothing manner, preventing partial or intermediate commits.  
+Data is first written to a staging or temporary location where all validations and quality checks are performed.  
+If all checks pass, the data is published to the final table; if any check fails, the staged data is not committed.
+
+Noted that this approach is commonly referred to as the Write-Audit-Publish pattern.  
+Observed that Delta Lake follows a write-once, atomic commit behavior by default, which aligns with the WAP pattern.
 
 ----
 ## Verification Question
@@ -62,7 +70,8 @@ Verified that the failure was correctly surfaced in the Databricks job run detai
 *If I have a binary tree with $N$ nodes, what is the Time Complexity of visiting every node exactly once?*
 
 **Answer:**  
+- Visiting every node exactly once in a binary tree has a time complexity of **O(N)**.
 
 ----
 
-# ✔️ Day 9 Status: _IN-PROGRESS_
+# ✔️ Day 9 Status: _CLEARED_
