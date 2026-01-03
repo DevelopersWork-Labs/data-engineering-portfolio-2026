@@ -12,3 +12,6 @@ I am combining my existing experience in Databricks and PySpark with modern GenA
 
 ## Long-Term Vision
 To build data platforms that integrate **LLMs as first-class citizens** — enabling intelligent data retrieval, automation, and AI-native applications.
+
+## Links
+- [LeetCode: 2026 Career Switch Problem List](https://leetcode.com/problem-list/vsm9u0sh/)
