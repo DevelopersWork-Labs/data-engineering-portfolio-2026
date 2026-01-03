@@ -31,6 +31,24 @@ Verified equality by ensuring:
 ## 🏗️ Phase 2: Engineering Data Quality
 
 ### 4. Implement Data Quality Gates
+Integrated data quality validation logic into the Silver layer transformation and executed the pipeline using Databricks Workflows.
+
+Configured the `retail360_daily_pipeline` job with dependent tasks for Bronze, Silver, and Gold layers.  
+Triggered the pipeline execution and observed successful completion of the Bronze task.
+
+During the Silver task execution, applied data quality checks to identify invalid records based on the following conditions:
+- `customer_id` is null
+- `quantity < 0`
+- `invoicedate` is null
+
+Filtered records matching the data quality conditions and evaluated their count prior to executing the MERGE operation.  
+Configured the Silver transformation to raise an exception when invalid records are detected.
+
+Observed that the Silver task failed with a data quality exception indicating the presence of invalid records.  
+The job execution stopped at the Silver stage, and downstream Gold task execution was skipped.
+
+Verified that the failure was correctly surfaced in the Databricks job run details, confirming that the data quality gate successfully prevented invalid data from propagating into downstream layers.
+![alt text](image.png)
 
 ----
 ## 📐 Phase 3: System Design
