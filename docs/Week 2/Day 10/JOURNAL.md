@@ -5,9 +5,54 @@
 ----
 ## 🏗️ Phase 1: System Design (The "Spike" Scenario)
 
-### 1. Backpressure
-### 2. Batch Capping
-### 3. Elasticity
+Analyzed architectural strategies to handle a sudden spike in streaming traffic (e.g., 1k events/sec → 100k events/sec) while maintaining system stability.
+
+### 1. Durable Buffer
+Reviewed the use of a distributed message queue (e.g., Kafka) to decouple producers and consumers.
+
+Compared architectures:
+- Existing: `producer → processor → sink`
+- Proposed: `producer → message queue → consumer → sink`
+
+Understood that a durable buffer absorbs incoming spikes, enables replay capability, and separates ingestion from processing.
+
+### 2. Horizontal Scaling
+Studied scaling strategies across streaming components:
+
+- Increased the number of Kafka consumer instances.
+- Increased Spark Structured Streaming executors.
+- Observed that micro-batch parallelism influences overall throughput.
+
+### 3. Partitioning Strategy
+Reviewed the role of partitioning in enabling horizontal scaling.
+
+- Each partition can be processed independently by a consumer.
+- Higher partition counts allow higher parallelism.
+- Considered over-provisioning partitions based on expected peak load to support future scaling.
+
+### 4. Backpressure & Flow Control
+Explored built-in flow control mechanisms in Spark Structured Streaming:
+
+- Rate limiting.
+- `maxOffsetsPerTrigger`.
+- Controlled batch sizing via configuration.
+
+Understood how these mechanisms prevent the processing engine from being overwhelmed during spikes.
+
+### 5. Idempotent Sink Design
+Reviewed strategies to prevent duplication or data corruption at the sink layer.
+
+- Leveraged Delta Lake’s transactional guarantees.
+- Used primary key–based `MERGE` operations to ensure deterministic writes.
+
+### 6. Monitoring & Alerting
+Identified key operational metrics to monitor during high-load scenarios:
+
+- Queue depth.
+- Processing latency.
+- Error rates.
+
+Considered configuring alerts based on threshold breaches for proactive system management.
 
 ----
 ## 🛠️ Phase 2: Project 2 — Streaming Ingestion
