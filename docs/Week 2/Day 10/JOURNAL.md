@@ -121,10 +121,17 @@ Applied the approach until the ancestor node was found.
 ## Verification Question
 
 **Question:**  
-*If I delete the `checkpoint` directory of a running streaming job, what happens when I restart the job?*
+1. **Logic Check:** In a sustained 10x spike, why is a message buffer (like a queue) insufficient as a standalone solution for system stability?
 
 **Answer:**  
+A queue (Kafka) is a buffer, not a processor. If the ingestion rate ($R_{in}$) is sustained at 10x the processing rate ($R_{out}$), the queue will eventually hit its retention limit or disk capacity. Backpressure is required to force the producer to slow down.
+
+**Question:** 
+2. **State Management:** If you delete the `checkpointLocation` directory of an active stream and restart the job, what happens to the data that was already successfully processed?
+
+**Answer:**  
+If deleted, the engine loses its "offset" tracking. Upon restart, it will attempt to re-read all source data from the beginning (unless a specific start offset is provided), leading to massive data duplication in the `bronze_stream_retail` table.
 
 ----
 
-# ✔️ Day 10 Status: _TO-DO_
+# ✔️ Day 10 Status: _CLEARED_
