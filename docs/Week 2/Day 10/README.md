@@ -1,93 +1,70 @@
+# 🚀 Day 10: The Streaming Lakehouse
 
-# 🚀 Day 10: The Streaming Lakehouse (CE Edition)
-
-**Phase:** Week 2 Weekend (The Build)  
-**Focus:** Spark Structured Streaming, Backpressure, "Spike" Handling, and Binary Search Trees.  
-**Constraint:** Databricks Community Edition (Standard Streams, No Autoscaling).  
+**Phase:** Week 2 — Real-Time Systems  
+**Focus:** Spark Structured Streaming, Backpressure, and Binary Search Trees.  
 **Estimated Time:** 4 Hours (Deep Work)  
 
 ---
 
 ## 🎯 Objectives
-1.  **Engineering Implementation:** Build a real-time ingestion pipeline using **Standard Structured Streaming** (adapted for Community Edition restrictions).
-2.  **System Design:** Master the "Senior" answer to **"How do you handle massive data spikes?"** (Backpressure & Flow Control).
-3.  **Algorithmic Proficiency:** Master **Binary Search Trees (BST)**, the foundational data structure for Database Indexing.
+1.  **Engineering Implementation:** Build a real-time ingestion pipeline using **Standard Structured Streaming** with explicit flow control.
+2.  **System Design:** Master the architectural strategies for handling massive data spikes by defining layers of defense: Backpressure, Batch Capping, and Load Shedding.
+3.  **Algorithmic Proficiency:** Master **Binary Search Trees (BST)**, the foundational structure for database indexing and sorted data retrieval.
 
 ---
 
 ## 🏗️ Phase 1: System Design (The "Spike" Scenario)
-**Context:** Interview Preparation  
-**Question:** *"Your system normally handles 1k events/sec. Suddenly, it hits 100k events/sec. How do you ensure the driver doesn't crash (OOM) and eventually processes the backlog?"*
+**Context:** Technical Architecture Review  
+**Question:** *"A system normally processes 1k events/sec. Suddenly, the load increases to 100k events/sec. How do you prevent a system crash and ensure all data eventually reaches the sink?"*
 
-**Action:** In `docs/Week2/Day10/JOURNAL.md`, write a section **"Handling Streaming Spikes"** covering these three layers of defense:
+**Action:** In your `JOURNAL.md`, create a section titled **"Handling Streaming Spikes"** covering these three layers:
 
-1.  **Protection (Backpressure):** * Explain `spark.streaming.backpressure.enabled`.
-    * *Concept:* Spark estimates the ingestion rate vs. processing rate and dynamically reduces the receiving rate so the driver doesn't explode.
-2.  **Control (Batch Size):** * Explain `maxFilesPerTrigger` (or `maxOffsetsPerTrigger`).
-    * *Concept:* Capping the input per micro-batch ensures predictable execution time even during a flood.
-3.  **Scale (Elasticity):** * Explain **Cluster Autoscaling** (Theoretical for CE).
-    * *Concept:* Adding worker nodes to chew through the backlog (requires sufficient Source Partitions).
+1.  **Backpressure:** Explain `spark.streaming.backpressure.enabled`. This allows the system to signal the data source to slow down, preventing the processing engine from being overwhelmed.
+2.  **Batch Capping:** Explain `maxFilesPerTrigger` or `maxOffsetsPerTrigger`. This sets a hard limit on the amount of data pulled in a single micro-batch, ensuring predictable execution times.
+3.  **Elasticity:** Discuss Cluster Autoscaling—dynamically adding compute resources to increase throughput and clear backlogs once the system is stabilized.
 
 ---
 
 ## 🛠️ Phase 2: Project 2 — Streaming Ingestion
 **Context:** "Retail360" Real-Time Layer  
-**Repo Path:** `project2_streaming/notebooks/04_stream_bronze.py`
-
-**Task:** Implement a stream that simulates "Spike Protection" by forcing a small batch size.
+**Task:** Implement a stream that utilizes a controlled batch size to maintain stability.
 
 ### Code Specification
-Since `cloudFiles` (Auto Loader) is unavailable in CE, use **Standard Streaming**:
-
-1.  **Explicit Schema:** You must define `StructType` manually for CSV streaming.
-2.  **Flow Control:** Set `.option("maxFilesPerTrigger", 1)` to simulate a throttled ingestion.
-3.  **Checkpointing:** Essential for fault tolerance.
-4.  **Trigger:** Use `.trigger(availableNow=True)` for cost-effective micro-batching.
+Implement the logic in `project2_streaming/notebooks/04_stream_bronze.py`:
 
 ```python
 from pyspark.sql import functions as F
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, TimestampType
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType
 
-# 1. Define Schema (Mandatory for CE CSV Streaming)
+# 1. Define Explicit Schema
 bronze_schema = StructType([
     StructField("InvoiceNo", StringType(), True),
     StructField("StockCode", StringType(), True),
-    StructField("Description", StringType(), True),
     StructField("Quantity", IntegerType(), True),
     StructField("InvoiceDate", StringType(), True),
     StructField("UnitPrice", DoubleType(), True),
-    StructField("CustomerID", DoubleType(), True),
-    StructField("Country", StringType(), True)
+    StructField("CustomerID", DoubleType(), True)
 ])
 
-# 2. Source: The "Throttled" Stream
+# 2. Source: The Throttled Stream
 raw_stream = (
     spark.readStream
     .format("csv")
     .schema(bronze_schema)
     .option("header", "true")
-    .option("maxFilesPerTrigger", 1)  # <--- The "Control" mechanism
+    .option("maxFilesPerTrigger", 1)  # Flow control mechanism
     .load("dbfs:/FileStore/raw/retail/")
 )
 
-# 3. Add Metadata (Lineage)
-enhanced_stream = (
-    raw_stream
-    .withColumn("_ingest_timestamp", F.current_timestamp())
-    .withColumn("_source_file", F.input_file_name())
-)
-
-# 4. Sink: Append to Delta with Checkpointing
+# 3. Sink: Append to Delta with Checkpointing
 query = (
-    enhanced_stream.writeStream
+    raw_stream.writeStream
     .format("delta")
     .outputMode("append")
-    .option("checkpointLocation", "dbfs:/FileStore/checkpoints/bronze_stream_retail")
+    .option("checkpointLocation", "dbfs:/FileStore/checkpoints/bronze_stream")
     .trigger(availableNow=True)
     .table("bronze_stream_retail")
 )
-
-query.awaitTermination()
 
 ```
 
@@ -97,38 +74,17 @@ query.awaitTermination()
 
 **Context:** Binary Search Trees (BST)
 
-### 1. Validate Binary Search Tree (LeetCode #98)
-
-* **Pattern:** Recursion with Range.
-* **Logic:** A node is valid only if `min_val < node.val < max_val`. Pass updated ranges down to children.
-
-### 2. Kth Smallest Element in a BST (LeetCode #230)
-
-* **Pattern:** In-Order Traversal.
-* **Logic:** In-order traversal (`Left -> Root -> Right`) visits BST nodes in sorted ascending order. Stop at the -th visited node.
-
-### 3. Lowest Common Ancestor of a BST (LeetCode #235)
-
-* **Pattern:** BST Property Navigation.
-* **Logic:** If `p` and `q` are both smaller than root, go Left. If both larger, go Right. Otherwise, current root is the LCA.
+1. **Validate Binary Search Tree (LeetCode #98):** Verify the tree property where left < root < right.
+2. **Lowest Common Ancestor of a BST (LeetCode #235):** Use the BST property to find the split point between two nodes.
+3. **Kth Smallest Element in a BST (LeetCode #230):** Implement an In-Order traversal to visit nodes in sorted order.
 
 ---
 
 ## 📝 Deliverables & Verification
 
-### Repository Sync
+### ✅ Verification Questions
 
-* **Location:** `data-engineering-portfolio-2026`
-* **Checklist:**
-* [ ] `project2_streaming/notebooks/04_stream_bronze.py` (Streaming Logic).
-* [ ] `dsa/day10/` (BST Solutions).
-* [ ] `docs/Week2/Day10/JOURNAL.md` (Spike Handling Explanation).
-
-
-
-### ✅ Verification Question
-
-> *In standard Structured Streaming (what you just wrote), if I add a new column to the CSV file but don't update the `StructType` in my code, what happens to that new data column during ingestion?*
-
+1. **Logic Check:** In a sustained 10x spike, why is a message buffer (like a queue) insufficient as a standalone solution for system stability?
+2. **State Management:** If you delete the `checkpointLocation` directory of an active stream and restart the job, what happens to the data that was already successfully processed?
 
 ---
