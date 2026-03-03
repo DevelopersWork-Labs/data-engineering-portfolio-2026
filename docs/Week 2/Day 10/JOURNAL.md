@@ -12,8 +12,41 @@
 ----
 ## 🛠️ Phase 2: Project 2 — Streaming Ingestion
 
-### 1. The Stream Source (Auto Loader)
-### 2. Schema Evolution
+### 1. The Stream Source (Controlled Structured Streaming)
+
+Implemented a structured streaming ingestion pipeline using an explicitly defined schema for the Bronze layer.
+
+Defined a `StructType` schema for incoming retail CSV files to avoid schema inference during streaming.
+
+Configured the streaming source using:
+
+- `format("csv")`
+- `.schema(bronze_schema)`
+- `.option("header", "true")`
+- `.option("maxFilesPerTrigger", 1)` to limit the number of files processed per micro-batch
+
+Loaded files from:
+`dbfs:/FileStore/raw/retail/`
+
+Configured the sink to write data in append mode to a Delta table:
+
+- `.format("delta")`
+- `.outputMode("append")`
+- `.option("checkpointLocation", "dbfs:/FileStore/checkpoints/bronze_stream")`
+- `.trigger(availableNow=True)`
+
+Persisted the stream output to the Delta table:
+`bronze_stream_retail`
+
+Observed that the stream processed available files in controlled micro-batches and terminated automatically due to `availableNow=True`.
+
+### 2. Checkpointing & State Tracking
+
+Configured a dedicated checkpoint directory to track streaming progress and processed file metadata.
+
+Verified that Spark maintains stream state in the checkpoint location to ensure fault tolerance and recovery.
+
+Confirmed that previously processed files are not reprocessed when the stream is restarted, as long as the checkpoint directory remains intact.
 
 ----
 ## 📐 Phase 3: Algorithmic Engineering (DSA)
